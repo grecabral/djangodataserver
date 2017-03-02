@@ -58,7 +58,7 @@ class Partida(models.Model):
     jogador2 = models.ForeignKey('hello.Jogador', related_name='partida_jogador_2', blank=True, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
-        return "{3} x {4}, Estrategia = {0}, Numero de Rodadas = {1}, Dificuldade = {2}".format(self.estrategia, self.numero_rodadas, self.dificuldade, self.jogador1, self.jogador2)
+        return "Partida {5}: {3} x {4}, Estrategia = {0}, Numero de Rodadas = {1}, Dificuldade = {2}".format(self.estrategia, self.numero_rodadas, self.dificuldade, self.jogador1, self.jogador2, self.id)
 
     class Meta:
         verbose_name = 'Partida'
@@ -90,7 +90,7 @@ class Rodada(models.Model):
     )
 
     def __str__(self):
-        return "Partida = {0} | Rodada = {1} | {6} {2} x {3} {7} | {6} {4} x {5} {7}".format(self.id_partida, self.rodada, self.pontuacao_jogador1, self.pontuacao_jogador2, self.cooperacao_jogador1, self.cooperacao_jogador2, self.id_partida.jogador1, self.id_partida.jogador2)
+        return "{0} | Rodada = {1} | {6} {2} x {3} {7} | {6} {4} x {5} {7}".format(self.id_partida, self.rodada, self.pontuacao_jogador1, self.pontuacao_jogador2, self.cooperacao_jogador1, self.cooperacao_jogador2, self.id_partida.jogador1, self.id_partida.jogador2)
 
     class Meta:
         verbose_name = 'Rodada'

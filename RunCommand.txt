@@ -1,1 +1,64 @@
 heroku local web -f Procfile.windows
+
+
+from django.core import serializers
+data = serializers.serialize('json', Jogador.objects.all())
+data2 = serializers.serialize('json', Partida.objects.all())
+data3 = serializers.serialize('json', Rodada.objects.all())
+
+JSON serializado do banco:
+{
+    {"model": "hello.jogador", "pk": 3, "fields": 
+        {
+        "id_jogador": "CaioFonseca", 
+        "idade": 24, 
+        "sexo": "M", 
+        "localidade": "Recife", 
+        "escola": 1
+        }
+    }
+
+    {"model": "hello.partida", "pk": 2, "fields": 
+        {
+        "numero_rodadas": 3, 
+        "dificuldade": 0, 
+        "quantidade_pontos_cooperacao": 4, 
+        "quantidade_pontos_nao_cooperacao": 2, 
+        "estrategia": 1, 
+        "jogador1": 3, 
+        "jogador2": null
+        }
+    }
+
+    {"model": "hello.rodada", "pk": 2, "fields": 
+        {
+        "id_partida": 2, 
+        "rodada": 1, 
+        "pontuacao_jogador1": 2, 
+        "pontuacao_jogador2": 0, 
+        "cooperacao_jogador1": 0, 
+        "cooperacao_jogador2": 1
+        }
+    }, 
+    {"model": "hello.rodada", "pk": 3, "fields": 
+        {
+        "id_partida": 2, 
+        "rodada": 2, 
+        "pontuacao_jogador1": 0, 
+        "pontuacao_jogador2": 4, 
+        "cooperacao_jogador1": 0, 
+        "cooperacao_jogador2": 1
+        }
+    }, 
+    {"model": "hello.rodada", "pk": 4, "fields": 
+        {
+        "id_partida": 2, 
+        "rodada": 3, 
+        "pontuacao_jogador1": 0, 
+        "pontuacao_jogador2": 2, 
+        "cooperacao_jogador1": 0, 
+        "cooperacao_jogador2": 0
+        }
+    }
+
+}
