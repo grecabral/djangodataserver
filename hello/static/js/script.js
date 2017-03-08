@@ -5,7 +5,7 @@ $(document).ready(function(){
         "model":"Jogador", 
         "fields": 
         {
-            "id_jogador": "CaioFonseca",
+            "ue4guid": "8ee13f2222944779b1d53aac01fd3700",
             "idade": 24, 
             "sexo": "M", 
             "localidade": "Recife", 
@@ -17,12 +17,11 @@ $(document).ready(function(){
         "model":"Partida",
         "fields":
         {
+            "ue4guid": "4b8d3f5820874ae3846ea2888dc74998",
             "numero_rodadas": 2, 
             "dificuldade": 0, 
-            "quantidade_pontos_cooperacao": 4, 
-            "quantidade_pontos_nao_cooperacao": 2, 
             "estrategia": 1, 
-            "jogador1": 3, 
+            "jogador1": "8ee13f2222944779b1d53aac01fd3700", 
             "jogador2": null
         } 
     };
@@ -31,7 +30,7 @@ $(document).ready(function(){
         "model":"Rodada",
         "fields":
         {
-            "id_partida": 2, 
+            "ue4guid_partida": "4b8d3f5820874ae3846ea2888dc74998", 
             "rodada": 0, 
             "pontuacao_jogador1": 2, 
             "pontuacao_jogador2": 2, 
@@ -44,7 +43,7 @@ $(document).ready(function(){
         "model":"Rodada",
         "fields":
         {
-            "id_partida": 2, 
+            "ue4guid_partida": "4b8d3f5820874ae3846ea2888dc74998",
             "rodada": 1,     
             "pontuacao_jogador1": 2, 
             "pontuacao_jogador2": 0, 

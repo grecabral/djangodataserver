@@ -3,12 +3,11 @@ from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 from hello.choices import * 
+import uuid
 
 # Create your models here.
 class Jogador(models.Model):    
-    id_jogador = models.CharField(
-        max_length=200,
-    )
+    ue4guid = models.UUIDField(blank=True, null=True, default=uuid.uuid4, editable=True, unique=True)
     idade = models.IntegerField(
         default=3,
         validators=[MaxValueValidator(120), MinValueValidator(3)],
@@ -27,13 +26,14 @@ class Jogador(models.Model):
     )
 
     def __str__(self):
-        return "{0}".format(self.id_jogador)
+        return "{0}".format(self.ue4guid)
 
     class Meta:
         verbose_name = 'Jogador'
         verbose_name_plural = 'Jogadores'
 
-class Partida(models.Model): 
+class Partida(models.Model):
+    ue4guid = models.UUIDField(blank=True, null=True, default=uuid.uuid4, editable=True, unique=True) 
     numero_rodadas = models.IntegerField(
         default=3,
         validators=[MaxValueValidator(120), MinValueValidator(3)],
@@ -41,14 +41,6 @@ class Partida(models.Model):
     dificuldade = models.IntegerField(
         default=FACIL,
         choices=DIFICULDADE_CHOICES,
-    )
-    quantidade_pontos_cooperacao = models.IntegerField(
-        default=0,
-        validators=[MaxValueValidator(100), MinValueValidator(0)],
-    )
-    quantidade_pontos_nao_cooperacao = models.IntegerField(
-        default=0,
-        validators=[MaxValueValidator(100), MinValueValidator(0)],
     )
     estrategia = models.IntegerField(
         default=ALEATORIO,
