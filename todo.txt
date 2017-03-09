@@ -1,0 +1,2 @@
+Criar funcao total ponto cooperadas de um jogador numa rodada
+Criar funcao total ponto nao cooperadas de um jogador numa rodada

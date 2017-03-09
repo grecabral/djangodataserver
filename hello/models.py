@@ -6,8 +6,7 @@ from hello.choices import *
 import uuid
 
 # Create your models here.
-class Jogador(models.Model):    
-    ue4guid = models.UUIDField(blank=True, null=True, default=uuid.uuid4, editable=True, unique=True)
+class Jogador(models.Model):
     idade = models.IntegerField(
         default=3,
         validators=[MaxValueValidator(120), MinValueValidator(3)],
@@ -26,17 +25,24 @@ class Jogador(models.Model):
     )
 
     def __str__(self):
-        return "{0}".format(self.ue4guid)
+        return "Idade: {0}, Sexo: {1}, Localidade: {2}, Escola: {3}".format(self.idade, self.sexo, self.localidade, self.escola)
 
     class Meta:
         verbose_name = 'Jogador'
         verbose_name_plural = 'Jogadores'
 
 class Partida(models.Model):
-    ue4guid = models.UUIDField(blank=True, null=True, default=uuid.uuid4, editable=True, unique=True) 
     numero_rodadas = models.IntegerField(
         default=3,
         validators=[MaxValueValidator(120), MinValueValidator(3)],
+    )
+    ponto_coop = models.IntegerField(
+        default=2,
+        validators=[MaxValueValidator(120), MinValueValidator(2)],
+    )
+    ponto_nao_coop = models.IntegerField(
+        default=1,
+        validators=[MaxValueValidator(120), MinValueValidator(1)],
     )
     dificuldade = models.IntegerField(
         default=FACIL,
@@ -46,11 +52,9 @@ class Partida(models.Model):
         default=ALEATORIO,
         choices=ESTRATEGIAS_CHOICES,
     )
-    jogador1 = models.ForeignKey('hello.Jogador', related_name='partida_jogador_1', on_delete=models.CASCADE)
-    jogador2 = models.ForeignKey('hello.Jogador', related_name='partida_jogador_2', blank=True, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
-        return "Partida {5}: {3} x {4}, Estrategia = {0}, Numero de Rodadas = {1}, Dificuldade = {2}".format(self.estrategia, self.numero_rodadas, self.dificuldade, self.jogador1, self.jogador2, self.id)
+        return "Partida {0} -> Estrategia: {1}, Numero de Rodadas: {2}, Dificuldade: {3}, Pontos_COOP: {4}, Pontos_NCOOP: {5}".format(self.id, self.estrategia, self.numero_rodadas, self.dificuldade, self.ponto_coop, self.ponto_nao_coop)
 
     class Meta:
         verbose_name = 'Partida'
@@ -82,7 +86,7 @@ class Rodada(models.Model):
     )
 
     def __str__(self):
-        return "{0} | Rodada = {1} | {6} {2} x {3} {7} | {6} {4} x {5} {7}".format(self.id_partida, self.rodada, self.pontuacao_jogador1, self.pontuacao_jogador2, self.cooperacao_jogador1, self.cooperacao_jogador2, self.id_partida.jogador1, self.id_partida.jogador2)
+        return "{0} | Rodada = {1} | {2} x {3} | {4} x {5}".format(self.id_partida, self.rodada, self.pontuacao_jogador1, self.pontuacao_jogador2, self.cooperacao_jogador1, self.cooperacao_jogador2)
 
     class Meta:
         verbose_name = 'Rodada'

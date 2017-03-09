@@ -1,55 +1,34 @@
 $(document).ready(function(){
-    var my_data = {};
-    my_data[0] = 
-    {
-        "model":"Jogador", 
-        "fields": 
-        {
-            "ue4guid": "8ee13f2222944779b1d53aac01fd3700",
-            "idade": 24, 
-            "sexo": "M", 
-            "localidade": "Recife", 
-            "escola": 1
-        }
-    };
-    my_data[1] =
-    {
-        "model":"Partida",
-        "fields":
-        {
-            "ue4guid": "4b8d3f5820874ae3846ea2888dc74998",
-            "numero_rodadas": 2, 
-            "dificuldade": 0, 
-            "estrategia": 1, 
-            "jogador1": "8ee13f2222944779b1d53aac01fd3700", 
-            "jogador2": null
-        } 
-    };
-    my_data[2] = 
-    {
-        "model":"Rodada",
-        "fields":
-        {
-            "ue4guid_partida": "4b8d3f5820874ae3846ea2888dc74998", 
-            "rodada": 0, 
-            "pontuacao_jogador1": 2, 
-            "pontuacao_jogador2": 2, 
-            "cooperacao_jogador1": 1, 
-            "cooperacao_jogador2": 1
-        }
-    };
-    my_data[3] = 
-    {
-        "model":"Rodada",
-        "fields":
-        {
-            "ue4guid_partida": "4b8d3f5820874ae3846ea2888dc74998",
-            "rodada": 1,     
-            "pontuacao_jogador1": 2, 
-            "pontuacao_jogador2": 0, 
-            "cooperacao_jogador1": 0, 
-            "cooperacao_jogador2": 1
-        }
+    my_data = {
+        "players":[
+            {
+                "age": 24, 
+                "sex": "M", 
+                "locality": "Recife", 
+                "school": 1
+            }
+        ],       
+        "number_of_rounds": 2, 
+        "coop_points": 4, 
+        "no_coop_points": 2, 
+        "difficulty": 0, 
+        "strategy": 1,
+        "rounds":[
+            {
+                "round": 0,     
+                "player1Score": 2, 
+                "player2Score": 2, 
+                "player1Coop": 0, 
+                "player2Coop": 0
+            },
+            {
+                "round": 1,     
+                "player1Score": 0, 
+                "player2Score": 4, 
+                "player1Coop": 1, 
+                "player2Coop": 0
+            }
+        ]
     };
     $("#new_entry").click(function(){
         $.ajax({
