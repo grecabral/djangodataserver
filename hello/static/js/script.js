@@ -8,6 +8,7 @@ $(document).ready(function(){
                 "school": 1
             }
         ],       
+        "gameFlag": 0, 
         "number_of_rounds": 2, 
         "coop_points": 4, 
         "no_coop_points": 2, 

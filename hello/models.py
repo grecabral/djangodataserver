@@ -23,9 +23,13 @@ class Jogador(models.Model):
         choices=ESCOLA_CHOICES,
         default=PUBLICA,
     )
+    jogo = models.IntegerField(
+        choices=GAME_FLAG,
+        default=PLATAFORMA,
+    )
 
     def __str__(self):
-        return "Idade: {0}, Sexo: {1}, Localidade: {2}, Escola: {3}".format(self.idade, self.sexo, self.localidade, self.escola)
+        return "Idade: {0}, Sexo: {1}, Localidade: {2}, Escola: {3}, Jogo:{4}".format(self.idade, dict(SEXO_CHOICES)[self.sexo], self.localidade, dict(ESCOLA_CHOICES)[self.escola], dict(GAME_FLAG)[self.jogo])
 
     class Meta:
         verbose_name = 'Jogador'
@@ -52,9 +56,15 @@ class Partida(models.Model):
         default=ALEATORIO,
         choices=ESTRATEGIAS_CHOICES,
     )
+    jogador1 = models.ForeignKey('hello.Jogador', related_name='partida_jogador_1', on_delete=models.CASCADE)
+    jogador2 = models.ForeignKey('hello.Jogador', related_name='partida_jogador_2', blank=True, null=True, on_delete=models.CASCADE)
+    jogo = models.IntegerField(
+        choices=GAME_FLAG,
+        default=PLATAFORMA,
+    )
 
     def __str__(self):
-        return "Partida {0} -> Estrategia: {1}, Numero de Rodadas: {2}, Dificuldade: {3}, Pontos_COOP: {4}, Pontos_NCOOP: {5}".format(self.id, self.estrategia, self.numero_rodadas, self.dificuldade, self.ponto_coop, self.ponto_nao_coop)
+        return "Partida {0} -> Estrategia: {1}, Numero de Rodadas: {2}, Dificuldade: {3}, Pontos_COOP: {4}, Pontos_NCOOP: {5}, Jogo:{6}".format(self.id, dict(ESTRATEGIAS_CHOICES)[self.estrategia], self.numero_rodadas, dict(DIFICULDADE_CHOICES)[self.dificuldade], self.ponto_coop, self.ponto_nao_coop, dict(GAME_FLAG)[self.jogo])
 
     class Meta:
         verbose_name = 'Partida'
@@ -84,9 +94,13 @@ class Rodada(models.Model):
         default=NAO_COOPEROU,
         choices=COOPERACAO_CHOICES,
     )
+    jogo = models.IntegerField(
+        choices=GAME_FLAG,
+        default=PLATAFORMA,
+    )
 
     def __str__(self):
-        return "{0} | Rodada = {1} | {2} x {3} | {4} x {5}".format(self.id_partida, self.rodada, self.pontuacao_jogador1, self.pontuacao_jogador2, self.cooperacao_jogador1, self.cooperacao_jogador2)
+        return "{0} | Rodada = {1} | {2} x {3} | {4} x {5} | {6}".format(self.id_partida, self.rodada, self.pontuacao_jogador1, self.pontuacao_jogador2, dict(COOPERACAO_CHOICES)[self.cooperacao_jogador1], dict(COOPERACAO_CHOICES)[self.cooperacao_jogador2], dict(GAME_FLAG)[self.jogo])
 
     class Meta:
         verbose_name = 'Rodada'

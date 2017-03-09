@@ -50,3 +50,11 @@ COOPERACAO_CHOICES = (
     (NAO_COOPEROU, 'Cooperou'),
     (COOPEROU, 'Não Cooperou'),
 )
+
+# Opções de Jogos
+PLATAFORMA = 0
+ESTILINGUE = 1
+GAME_FLAG = (
+    (PLATAFORMA, 'Plataforma'),
+    (ESTILINGUE, 'Slingshot Challenge'),
+)
