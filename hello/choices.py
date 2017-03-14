@@ -2,11 +2,9 @@
 # Opções de Sexo
 MASCULINO = 'M'
 FEMININO = 'F'
-NAODEFINIDO = 'N'
 SEXO_CHOICES = (
     (MASCULINO, 'Masculino'),
     (FEMININO, 'Feminino'),
-    (NAODEFINIDO, 'Não Definido'),
 )
 
 # Opções de escola

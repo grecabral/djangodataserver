@@ -14,7 +14,7 @@ class Jogador(models.Model):
     sexo = models.CharField(
         max_length=2,
         choices=SEXO_CHOICES,
-        default=NAODEFINIDO,
+        default=MASCULINO,
     )
     localidade = models.CharField(
         max_length=500,
@@ -29,7 +29,7 @@ class Jogador(models.Model):
     )
 
     def __str__(self):
-        return "Idade: {0}, Sexo: {1}, Localidade: {2}, Escola: {3}, Jogo:{4}".format(self.idade, dict(SEXO_CHOICES)[self.sexo], self.localidade, dict(ESCOLA_CHOICES)[self.escola], dict(GAME_FLAG)[self.jogo])
+        return "Jogador:{5} Idade: {0}, Sexo: {1}, Localidade: {2}, Escola: {3}, Jogo:{4}".format(self.idade, dict(SEXO_CHOICES)[self.sexo], self.localidade, dict(ESCOLA_CHOICES)[self.escola], dict(GAME_FLAG)[self.jogo], self.id)
 
     class Meta:
         verbose_name = 'Jogador'
