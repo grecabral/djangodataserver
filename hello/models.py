@@ -75,8 +75,8 @@ class Partida(models.Model):
 class Rodada(models.Model):
     id_partida = models.ForeignKey('hello.Partida', on_delete=models.CASCADE)
     rodada = models.IntegerField(
-        default=0,
-        validators=[MaxValueValidator(100), MinValueValidator(0)],
+        default=1,
+        validators=[MaxValueValidator(100), MinValueValidator(1)],
     )
     pontuacao_jogador1 = models.IntegerField(
         default=0,
@@ -113,6 +113,6 @@ class Rodada(models.Model):
     def save(self, *args, **kwargs):
         max_rounds = self.id_partida.numero_rodadas
         count = self.canAdd()
-        if count < max_rounds:
+        if count <= max_rounds:
             self.rodada = count+1
             super(Rodada, self).save(*args, **kwargs)
