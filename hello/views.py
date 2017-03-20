@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.http import StreamingHttpResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -12,6 +12,7 @@ from django.utils.six.moves import range
 from django.http import StreamingHttpResponse
 from hello.choices import * 
 
+from datetime import datetime
 
 from .models import Jogador, Partida, Rodada
 
@@ -28,8 +29,21 @@ def generate_csv(request):
     # Generate a sequence of rows. The range is based on the maximum number of
     # rows that can be handled by a single sheet in most spreadsheet
     # applications.
-    mode = "Partidas"
-    jogo = "Plataforma"
+    now = "{}".format(datetime.now().strftime('%m-%d-%Y--%Hh%Mm%Ss'))
+    if request.method == "GET":
+        return redirect('/')
+
+    
+    
+    game = request.POST.get('game_select')
+    mode = request.POST.get('csv_type')
+
+    if not game:
+        game = GAME_FLAG[0]
+
+    if not mode:
+        mode = "Jogadores"
+
     if mode == "Jogadores":
         content = [("ID","Idade", "Sexo", "Localidade", "Escola", "Jogo")]
         players = Jogador.objects.all()
@@ -37,7 +51,7 @@ def generate_csv(request):
             content.append((p.id, p.idade, dict(SEXO_CHOICES)[p.sexo], p.localidade, dict(ESCOLA_CHOICES)[p.escola], dict(GAME_FLAG)[p.jogo]))
     
     elif mode == "Partidas":
-        if(jogo == "Plataforma"):
+        if(game == "Plataforma"):
             content = [("ID","Número de Rodadas", "Pontos por Cooperação", "Pontos por não Cooperação", "Estratégia", "ID do Jogador1", "ID do Jogador2", "Jogo")]
         else:
             content = [("ID","Número de Rodadas", "Pontos por Cooperação", "Pontos por não Cooperação", "Dificuldade", "Estratégia", "ID do Jogador1", "ID do Jogador2", "Jogo")]
@@ -48,7 +62,7 @@ def generate_csv(request):
             except AttributeError:
                 j2_id = "-"
 
-            if(jogo == "Plataforma"):
+            if(game == "Plataforma"):
                 content.append((m.id, m.numero_rodadas, m.ponto_coop, m.ponto_nao_coop, dict(ESTRATEGIAS_CHOICES)[m.estrategia], m.jogador1.id, j2_id, dict(GAME_FLAG)[m.jogo]))
             else:
                 content.append((m.id, m.numero_rodadas, m.ponto_coop, m.ponto_nao_coop, dict(DIFICULDADE_CHOICES)[m.dificuldade], dict(ESTRATEGIAS_CHOICES)[m.estrategia], m.jogador1.id, j2_id, dict(GAME_FLAG)[m.jogo]))
@@ -62,11 +76,12 @@ def generate_csv(request):
     pseudo_buffer = Echo()
     writer = csv.writer(pseudo_buffer, encoding='utf-8')
     response = StreamingHttpResponse((writer.writerow(row) for row in content), content_type="text/csv")
-    response['Content-Disposition'] = 'attachment; filename="{}.csv"'.format(mode)
+    response['Content-Disposition'] = 'attachment; filename="{}--{}--{}.csv"'.format(game, mode, now)
     return response
 
 def index(request):
     context = {
+        "gameFlag": GAME_FLAG,
     }
     # return HttpResponse('Hello from Python!')
     return render(request, 'index.html', context)

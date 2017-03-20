@@ -44,4 +44,14 @@ $(document).ready(function(){
         });
     });
     
+    $('#submitBtn').click(function() {
+      checked = $("input[type=radio]:checked").length;
+
+      if(!checked) {
+        alert("Você precisa selecionar uma opção");
+        return false;
+      }
+
+    });
+
 });

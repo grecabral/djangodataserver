@@ -44,9 +44,11 @@ ESTRATEGIAS_CHOICES = (
 # Opções de Cooperação
 NAO_COOPEROU = 0
 COOPEROU = 1
+NEUTRO = 2
 COOPERACAO_CHOICES = (
     (NAO_COOPEROU, 'Cooperou'),
     (COOPEROU, 'Não Cooperou'),
+    (NEUTRO, 'Jogada Neutra'),
 )
 
 # Opções de Jogos
