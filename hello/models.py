@@ -29,7 +29,7 @@ class Jogador(models.Model):
     )
 
     def __str__(self):
-        return "Jogador:{5} Idade: {0}, Sexo: {1}, Localidade: {2}, Escola: {3}, Jogo:{4}".format(self.idade, dict(SEXO_CHOICES)[self.sexo], self.localidade, dict(ESCOLA_CHOICES)[self.escola], dict(GAME_FLAG)[self.jogo], self.id)
+        return "Jogador:{5}| Idade: {0}| Sexo: {1}| Localidade: {2}| Escola: {3}| Jogo:{4}".format(self.idade, dict(SEXO_CHOICES)[self.sexo], self.localidade, dict(ESCOLA_CHOICES)[self.escola], dict(GAME_FLAG)[self.jogo], self.id)
 
     class Meta:
         verbose_name = 'Jogador'
@@ -64,7 +64,7 @@ class Partida(models.Model):
     )
 
     def __str__(self):
-        return "Partida {0} -> Estrategia: {1}, Numero de Rodadas: {2}, Dificuldade: {3}, Pontos_COOP: {4}, Pontos_NCOOP: {5}, Jogo:{6}".format(self.id, dict(ESTRATEGIAS_CHOICES)[self.estrategia], self.numero_rodadas, dict(DIFICULDADE_CHOICES)[self.dificuldade], self.ponto_coop, self.ponto_nao_coop, dict(GAME_FLAG)[self.jogo])
+        return "Partida: {0}| Estrategia: {1}| Numero de Rodadas: {2}| Dificuldade: {3}| Pontos_COOP: {4}| Pontos_NCOOP: {5}| Jogo:{6}".format(self.id, dict(ESTRATEGIAS_CHOICES)[self.estrategia], self.numero_rodadas, dict(DIFICULDADE_CHOICES)[self.dificuldade], self.ponto_coop, self.ponto_nao_coop, dict(GAME_FLAG)[self.jogo])
 
     class Meta:
         verbose_name = 'Partida'
@@ -100,7 +100,7 @@ class Rodada(models.Model):
     )
 
     def __str__(self):
-        return "{0} | Rodada = {1} | {2} x {3} | {4} x {5} | {6}".format(self.id_partida, self.rodada, self.pontuacao_jogador1, self.pontuacao_jogador2, dict(COOPERACAO_CHOICES)[self.cooperacao_jogador1], dict(COOPERACAO_CHOICES)[self.cooperacao_jogador2], dict(GAME_FLAG)[self.jogo])
+        return "Partida: {0} | Rodada = {1} | {2} x {3} | {4} x {5} | {6}".format(self.id_partida.id, self.rodada, self.pontuacao_jogador1, self.pontuacao_jogador2, dict(COOPERACAO_CHOICES)[self.cooperacao_jogador1], dict(COOPERACAO_CHOICES)[self.cooperacao_jogador2], dict(GAME_FLAG)[self.jogo])
 
     class Meta:
         verbose_name = 'Rodada'

@@ -11,7 +11,7 @@
             <label for="game_select">Selecione o jogo: </label>
             <select id="game_select" name="game_select" class="form-control">
                 {% for k,v in gameFlag %}
-                <option>{{ v }}</option>
+                <option value="{{k}}">{{ v }}</option>
                 {% endfor %}
             </select>
         </div>

@@ -33,9 +33,7 @@ def generate_csv(request):
     if request.method == "GET":
         return redirect('/')
 
-    
-    
-    game = request.POST.get('game_select')
+    game = int(request.POST.get('game_select'))
     mode = request.POST.get('csv_type')
 
     if not game:
@@ -46,16 +44,25 @@ def generate_csv(request):
 
     if mode == "Jogadores":
         content = [("ID","Idade", "Sexo", "Localidade", "Escola", "Jogo")]
-        players = Jogador.objects.all()
+        players = Jogador.objects.filter(jogo=game)
         for p in players:
-            content.append((p.id, p.idade, dict(SEXO_CHOICES)[p.sexo], p.localidade, dict(ESCOLA_CHOICES)[p.escola], dict(GAME_FLAG)[p.jogo]))
+            if not p.sexo:
+                p.sexo = "M"
+            content.append(
+                (
+                    p.id,
+                    p.idade,
+                    dict(SEXO_CHOICES)[p.sexo],
+                    p.localidade,
+                    dict(ESCOLA_CHOICES)[p.escola],
+                    dict(GAME_FLAG)[p.jogo]))
     
     elif mode == "Partidas":
         if(game == "Plataforma"):
             content = [("ID","Número de Rodadas", "Pontos por Cooperação", "Pontos por não Cooperação", "Estratégia", "ID do Jogador1", "ID do Jogador2", "Jogo")]
         else:
             content = [("ID","Número de Rodadas", "Pontos por Cooperação", "Pontos por não Cooperação", "Dificuldade", "Estratégia", "ID do Jogador1", "ID do Jogador2", "Jogo")]
-        matches = Partida.objects.all()
+        matches = Partida.objects.filter(jogo=game)
         for m in matches:
             try:
                 j2_id = m.jogador2.id
@@ -63,20 +70,46 @@ def generate_csv(request):
                 j2_id = "-"
 
             if(game == "Plataforma"):
-                content.append((m.id, m.numero_rodadas, m.ponto_coop, m.ponto_nao_coop, dict(ESTRATEGIAS_CHOICES)[m.estrategia], m.jogador1.id, j2_id, dict(GAME_FLAG)[m.jogo]))
+                content.append(
+                    (
+                        m.id,
+                        m.numero_rodadas,
+                        m.ponto_coop,
+                        m.ponto_nao_coop,
+                        dict(ESTRATEGIAS_CHOICES)[m.estrategia],
+                        m.jogador1.id,
+                        j2_id,
+                        dict(GAME_FLAG)[m.jogo]))
             else:
-                content.append((m.id, m.numero_rodadas, m.ponto_coop, m.ponto_nao_coop, dict(DIFICULDADE_CHOICES)[m.dificuldade], dict(ESTRATEGIAS_CHOICES)[m.estrategia], m.jogador1.id, j2_id, dict(GAME_FLAG)[m.jogo]))
+                content.append(
+                    (
+                        m.id,
+                        m.numero_rodadas,
+                        m.ponto_coop,
+                        m.ponto_nao_coop,
+                        dict(DIFICULDADE_CHOICES)[m.dificuldade],
+                        dict(ESTRATEGIAS_CHOICES)[m.estrategia],
+                        m.jogador1.id,
+                        j2_id,
+                        dict(GAME_FLAG)[m.jogo]))
     
     elif mode == "Rodadas":
         content = [("ID", "Número da Rodada", "Pontuação do Jogador1", "Pontuação do Jogador2", "Cooperação do Jogador1", "Cooperação do Jogador2", "Jogo")]
-        rounds = Rodada.objects.all()
+        rounds = Rodada.objects.filter(jogo=game)
         for r in rounds:
-            content.append((r.id, r.rodada, r.pontuacao_jogador1, r.pontuacao_jogador2, dict(COOPERACAO_CHOICES)[r.cooperacao_jogador1], dict(COOPERACAO_CHOICES)[r.cooperacao_jogador2], dict(GAME_FLAG)[r.jogo]))
+            content.append(
+                (
+                    r.id, r.rodada,
+                    r.pontuacao_jogador1,
+                    r.pontuacao_jogador2,
+                    dict(COOPERACAO_CHOICES)[r.cooperacao_jogador1],
+                    dict(COOPERACAO_CHOICES)[r.cooperacao_jogador2],
+                    dict(GAME_FLAG)[r.jogo]))
 
     pseudo_buffer = Echo()
     writer = csv.writer(pseudo_buffer, encoding='utf-8')
     response = StreamingHttpResponse((writer.writerow(row) for row in content), content_type="text/csv")
-    response['Content-Disposition'] = 'attachment; filename="{}--{}--{}.csv"'.format(game, mode, now)
+    response['Content-Disposition'] = 'attachment; filename="{}--{}--{}.csv"'.format(dict(GAME_FLAG)[game], mode, now)
     return response
 
 def index(request):
