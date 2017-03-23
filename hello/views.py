@@ -33,7 +33,8 @@ def generate_csv(request):
     if request.method == "GET":
         return redirect('/')
 
-    game = int(request.POST.get('game_select'))
+    game = request.POST.get('game_select')
+    print(game)
     mode = request.POST.get('csv_type')
 
     if not game:
@@ -109,7 +110,7 @@ def generate_csv(request):
     pseudo_buffer = Echo()
     writer = csv.writer(pseudo_buffer, encoding='utf-8')
     response = StreamingHttpResponse((writer.writerow(row) for row in content), content_type="text/csv")
-    response['Content-Disposition'] = 'attachment; filename="{}--{}--{}.csv"'.format(dict(GAME_FLAG)[game], mode, now)
+    response['Content-Disposition'] = 'attachment; filename="{}--{}--{}.csv"'.format(dict(GAME_FLAG)[int(game)], mode, now)
     return response
 
 def index(request):
