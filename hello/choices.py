@@ -46,8 +46,8 @@ NAO_COOPEROU = 0
 COOPEROU = 1
 NEUTRO = 2
 COOPERACAO_CHOICES = (
-    (NAO_COOPEROU, 'Cooperou'),
-    (COOPEROU, 'Não Cooperou'),
+    (NAO_COOPEROU, 'Não Cooperou'),
+    (COOPEROU, 'Cooperou'),
     (NEUTRO, 'Jogada Neutra'),
 )
 
