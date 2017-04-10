@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="jumbotron text-center">
+    <div class="col-lg-4 col-md-6 center-form">
+    <form action="{% url 'hello:csv' %}" method="post" class="form-horizontal">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="game_select">Selecione o jogo: </label>
+            <select id="game_select" name="game_select" class="form-control">
+                {% for k,v in gameFlag %}
+                <option value="{{k}}">{{ v }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="radio-inline">
+              <input type="radio" name="csv_type" id="inlineCheckbox1" value="Jogadores"> Jogadores
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="csv_type" id="inlineCheckbox2" value="Partidas"> Partidas
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="csv_type" id="inlineCheckbox3" value="Rodadas"> Rodadas
+            </label>
+        </div>
+        <input id="submitBtn" type="submit" class="btn btn-lg btn-primary" value="Gerar CSV">
+    </form>
+    </div>
+</div>
+{% endblock %}

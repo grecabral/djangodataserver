@@ -1,0 +1,20 @@
+Para uma partida X
+Total de pontos de cada jogador numa dada partida
+Total de pontos cooperados numa dada partida
+Total de pontos nao cooperados numa dada partida
+Total de pontos cooperadas de cada jogador numa dada partida
+Total de pontos nao cooperadas de cada jogador numa dada partida
+Taxa de pontos cooperados de cada jogador numa dada partida
+Taxa de pontos nao cooperados de cada jogador numa dada partida
+Taxa de pontos cooperados numa dada partida
+Taxa de pontos nao cooperados numa dada partida
+
+Geral
+Taxa de pontos cooperados
+Taxa de pontos nao cooperados
+Relacao de pontos cooperados com idade
+Relacao de pontos nao cooperados com idade
+Relacao de pontos cooperados com sexo
+Relacao de pontos nao cooperados com sexo
+Relacao de pontos cooperados com tipo de escola
+Relacao de pontos nao cooperados com tipo de escola
