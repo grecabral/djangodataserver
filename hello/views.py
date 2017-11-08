@@ -102,7 +102,7 @@ def generate_csv(request):
             content.append(
                 (
 
-                    r.id_partida,
+                    r.id_partida.id,
                     r.id, r.rodada,
                     r.pontuacao_jogador1,
                     r.pontuacao_jogador2,
