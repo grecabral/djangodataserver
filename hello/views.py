@@ -95,11 +95,14 @@ def generate_csv(request):
                         dict(GAME_FLAG)[m.jogo]))
     
     elif mode == "Rodadas":
-        content = [("ID", "Número da Rodada", "Pontuação do Jogador1", "Pontuação do Jogador2", "Cooperação do Jogador1", "Cooperação do Jogador2", "Jogo")]
+
+        content = [("ID_PARTIDA", "ID", "Número da Rodada", "Pontuação do Jogador1", "Pontuação do Jogador2", "Cooperação do Jogador1", "Cooperação do Jogador2", "Jogo")]
         rounds = Rodada.objects.filter(jogo=game)
         for r in rounds:
             content.append(
                 (
+
+                    r.id_partida,
                     r.id, r.rodada,
                     r.pontuacao_jogador1,
                     r.pontuacao_jogador2,
